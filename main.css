@@ -1,0 +1,120 @@
+:root {
+  --color-bg: #282c34;
+  --color-fg: #dcdfe4;
+  --color-heading: #6ce0ac;
+  --color-input-bg: #2c313c;
+  --color-input-border: #3e4451;
+  --color-input-focus: #61afef;
+  --color-button-hover-bg: #3e4451;
+  --color-placeholder: #5c6370;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  margin: 10px;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  color: var(--color-heading);
+}
+
+textarea,
+input {
+  background: var(--color-input-bg);
+  color: var(--color-fg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 1rem;
+  margin: 8px 0;
+  width: 320px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border 0.2s;
+}
+
+textarea:focus,
+input:focus {
+  border: 1.5px solid var(--color-input-focus);
+}
+
+textarea {
+  width: 100%;
+  height: 120px;
+}
+
+button {
+  background: var(--color-input-bg);
+  color: var(--color-fg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  margin: 8px 4px 8px 0;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+  vertical-align: middle;
+}
+
+button:hover {
+  background: var(--color-button-hover-bg);
+  border: 1.5px solid var(--color-input-focus);
+}
+
+pre#output {
+  background: var(--color-input-bg);
+  color: var(--color-fg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 1rem;
+  width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+::placeholder {
+  color: var(--color-placeholder);
+  opacity: 1;
+}
+
+.banner {
+  position: fixed;
+  top: 35px;
+  right: -60px;
+  background: var(--color-placeholder);
+  font-size: 0.8rem;
+  font-weight: bold;
+  transform: rotate(45deg);
+  text-align: center;
+  box-shadow: 0px 6px 5px -6px rgba(0,0,0,0.75);
+}
+.banner:before, .banner:after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  left: 0;
+}
+.banner:before {
+  top: 3px;
+}
+.banner:after {
+  bottom: 3px;
+}
+.banner a {
+  color: var(--color-fg);
+  text-decoration: none;
+  padding: 8px 50px;
+  display: inline-block;
+}

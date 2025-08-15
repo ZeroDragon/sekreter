@@ -1,8 +1,4 @@
-/**
- * Encrypts and decrypts text using AES-CBC in the browser.
- * Key and IV must be provided as text, and are converted to hex before use.
- */
-
+// helpers
 async function bufferToHex (buffer) {
   const bytes = new Uint8Array(buffer)
   return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('')
@@ -27,6 +23,12 @@ function hexToBytes (hex) {
     bytes[i] = parseInt(hex.substr(i * 2, 2), 16)
   }
   return bytes
+}
+
+async function parseError (prom) {
+  return prom.catch(_err => {
+    return '500: Internal server error'
+  })
 }
 
 async function encryptText (plainText, keyText, ivText) {
@@ -77,28 +79,26 @@ async function decryptText (cipherTextBase64, keyText, ivText) {
   return decoder.decode(decrypted)
 }
 
-async function parseError (prom) {
-  return prom.catch(_err => {
-    return '500: Internal server error'
-  })
-}
-
+// Plain vanilla JavaScript to handle UI interactions
 const encryptBtn = document.getElementById('encrypt')
 const decryptBtn = document.getElementById('decrypt')
 const output = document.getElementById('output')
 
-encryptBtn.addEventListener('click', async () => {
+const getValues = () => {
   const input = document.getElementById('input').value
   const key = document.getElementById('key').value
   const iv = document.getElementById('iv').value
+  return { input, key, iv }
+}
+
+encryptBtn.addEventListener('click', async () => {
+  const { input, key, iv } = getValues()
   const encrypted = await parseError(encryptText(input, key, iv))
   output.textContent = encrypted
 })
 
 decryptBtn.addEventListener('click', async () => {
-  const input = document.getElementById('input').value
-  const key = document.getElementById('key').value
-  const iv = document.getElementById('iv').value
+  const { input, key, iv } = getValues()
   const decrypted = await parseError(decryptText(input, key, iv))
   output.textContent = decrypted
 })
