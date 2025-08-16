@@ -83,6 +83,7 @@ async function decryptText (cipherTextBase64, keyText, ivText) {
 const encryptBtn = document.getElementById('encrypt')
 const decryptBtn = document.getElementById('decrypt')
 const output = document.getElementById('output')
+const copy = document.getElementById('copy')
 
 const getValues = () => {
   const input = document.getElementById('input').value
@@ -101,4 +102,13 @@ decryptBtn.addEventListener('click', async () => {
   const { input, key, iv } = getValues()
   const decrypted = await parseError(decryptText(input, key, iv))
   output.textContent = decrypted
+})
+
+copy.addEventListener('click', () => {
+  const text = output.textContent
+  navigator.clipboard.writeText(text).then(() => {
+    console.log('Text copied to clipboard')
+  }).catch(err => {
+    console.error('Failed to copy text: ', err)
+  })
 })
