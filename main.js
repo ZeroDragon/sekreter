@@ -107,7 +107,12 @@ decryptBtn.addEventListener('click', async () => {
 copy.addEventListener('click', () => {
   const text = output.textContent
   navigator.clipboard.writeText(text).then(() => {
-    console.log('Text copied to clipboard')
+    copy.classList.add('copied')
+    copy.textContent = 'Copied!'
+    setTimeout(() => {
+      copy.classList.remove('copied')
+      copy.textContent = 'Copy to clipboard'
+    }, 2000)
   }).catch(err => {
     console.error('Failed to copy text: ', err)
   })

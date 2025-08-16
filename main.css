@@ -118,3 +118,21 @@ pre#output {
   padding: 8px 50px;
   display: inline-block;
 }
+.copy {
+  transition: all 0.5s;
+}
+.copy.copied {
+  background: var(--color-heading);
+  color: var(--color-bg);
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-input-bg);
+  color: var(--color-fg);
+  text-align: center;
+  padding: 10px;
+  font-size: 0.8rem;
+}
