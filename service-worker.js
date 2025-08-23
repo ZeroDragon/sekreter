@@ -1,17 +1,16 @@
 /* global self, caches, fetch */
 const CACHE_NAME = 'sekreter-cache-v1'
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/main.css',
-  '/main.js',
-  '/favicons/android-chrome-192x192.png',
-  '/favicons/android-chrome-512x512.png',
-  '/favicons/apple-touch-icon.png',
-  '/favicons/favicon-16x16.png',
-  '/favicons/favicon-32x32.png',
-  '/favicons/favicon.ico',
-  '/favicons/site.webmanifest'
+  'index.html',
+  'main.css',
+  'main.js',
+  'favicons/android-chrome-192x192.png',
+  'favicons/android-chrome-512x512.png',
+  'favicons/apple-touch-icon.png',
+  'favicons/favicon-16x16.png',
+  'favicons/favicon-32x32.png',
+  'favicons/favicon.ico',
+  'favicons/site.webmanifest'
 ]
 
 self.addEventListener('install', event => {
