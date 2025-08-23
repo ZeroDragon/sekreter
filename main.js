@@ -1,3 +1,17 @@
+// Registro del Service Worker para modo offline
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function (_registration) {
+        // Registro exitoso
+        // console.log('ServiceWorker registrado con éxito:', registration.scope)
+      })
+      .catch(function (error) {
+        // Fallo en el registro
+        console.log('ServiceWorker no pudo registrarse:', error)
+      })
+  })
+}
 // helpers
 async function bufferToHex (buffer) {
   const bytes = new Uint8Array(buffer)
