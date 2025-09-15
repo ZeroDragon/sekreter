@@ -1,17 +1,28 @@
+/* global Peer */
+let conn
+let connOpen
+
 // Registro del Service Worker para modo offline
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(function (_registration) {
-        // Registro exitoso
-        // console.log('ServiceWorker registrado con éxito:', registration.scope)
-      })
-      .catch(function (error) {
-        // Fallo en el registro
-        console.log('ServiceWorker no pudo registrarse:', error)
-      })
-  })
+function registerServiceWorker () {
+  if ('serviceWorker' in navigator) {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      // Never register service worker on localhost
+      return
+    }
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(function (_registration) {
+          // Registro exitoso
+          // console.log('ServiceWorker registrado con éxito:', registration.scope)
+        })
+        .catch(function (error) {
+          // Fallo en el registro
+          console.log('ServiceWorker no pudo registrarse:', error)
+        })
+    })
+  }
 }
+registerServiceWorker()
 // helpers
 async function bufferToHex (buffer) {
   const bytes = new Uint8Array(buffer)
@@ -96,8 +107,10 @@ async function decryptText (cipherTextBase64, keyText, ivText) {
 // Plain vanilla JavaScript to handle UI interactions
 const encryptBtn = document.getElementById('encrypt')
 const decryptBtn = document.getElementById('decrypt')
+const connectBtn = document.getElementById('connect')
 const output = document.getElementById('output')
 const copy = document.getElementById('copy')
+const types = document.querySelectorAll('input[name="type"]')
 
 const getValues = () => {
   const input = document.getElementById('input').value
@@ -110,6 +123,9 @@ encryptBtn.addEventListener('click', async () => {
   const { input, key, iv } = getValues()
   const encrypted = await parseError(encryptText(input, key, iv))
   output.textContent = encrypted
+  if (connOpen) {
+    conn.send(JSON.stringify({ type: 'secret', message: `${key}:${iv}` }))
+  }
 })
 
 decryptBtn.addEventListener('click', async () => {
@@ -131,3 +147,95 @@ copy.addEventListener('click', () => {
     console.error('Failed to copy text: ', err)
   })
 })
+
+connectBtn.addEventListener('click', () => {
+  const id = document.getElementById('remoteID').value
+  if (id) {
+    window.connectTo(id)
+    document.getElementById('connect').innerText = 'Connecting...'
+  }
+})
+
+const handleTypeChange = async (type) => {
+  const onlyOnRemote = document.querySelectorAll('.onlyOnRemote')
+  if (type === 'Remote') {
+    await loadRTC()
+    setupConnection()
+    onlyOnRemote.forEach(el => el.classList.add('show'))
+  } else {
+    closeConnection()
+    onlyOnRemote.forEach(el => el.classList.remove('show'))
+  }
+}
+
+let rtcLoaded = false
+const loadRTC = async _ => {
+  if (rtcLoaded) return
+  const script = document.createElement('script')
+  script.src = 'https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js'
+  document.getElementsByTagName('head')[0]
+    .appendChild(script)
+  return new Promise((resolve) => {
+    script.onload = () => {
+      rtcLoaded = true
+      resolve()
+    }
+  })
+}
+
+types.forEach(radio => {
+  radio.addEventListener('change', async () => {
+    handleTypeChange(radio.value)
+  })
+})
+
+const closeConnection = () => {
+  const localID = document.getElementById('localID')
+  const remoteID = document.getElementById('remoteID')
+  document.getElementById('connect').innerText = 'Connect'
+  conn && conn.close()
+  localID.value = ''
+  remoteID.value = ''
+  window.RTCid = null
+  conn = null
+  connOpen = false
+}
+
+const setupConnection = () => {
+  const peer = new Peer()
+  window.connectTo = (id) => {
+    conn = peer.connect(id)
+    conn.on('open', function () {
+      conn.send(JSON.stringify({ type: 'greeting', message: window.RTCid }))
+    })
+  }
+
+  peer.on('open', function (id) {
+    const localID = document.getElementById('localID')
+    localID.value = id
+    window.RTCid = id
+  })
+
+  peer.on('connection', function (conn) {
+    conn.on('data', function (data) {
+      const { type, message } = JSON.parse(data)
+      const remoteId = document.getElementById('remoteID').value
+      if (type === 'greeting') {
+        if (message !== remoteId) {
+          document.getElementById('remoteID').value = message
+          window.connectTo(message)
+        }
+        document.getElementById('connect').innerText = 'Connected'
+        document.getElementById('connect').disabled = true
+        connOpen = true
+      } else {
+        console.log('Received', type, message)
+        if (type === 'secret') {
+          const [key, iv] = message.split(':')
+          document.getElementById('key').value = key
+          document.getElementById('iv').value = iv
+        }
+      }
+    })
+  })
+}

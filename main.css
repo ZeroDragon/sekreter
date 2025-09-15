@@ -136,3 +136,9 @@ footer {
   padding: 10px;
   font-size: 0.8rem;
 }
+.onlyOnRemote {
+  display: none;
+}
+.onlyOnRemote.show {
+  display: inline-block;
+}

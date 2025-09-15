@@ -17,6 +17,11 @@
     <p>Encrypt and decrypt text using AES-CBC.</p>
     <textarea id="input" placeholder="Enter text to encrypt/decrypt" autocomplete="off"></textarea>
     <br />
+    <label>Local <input type="radio" name="type" value="Local" checked/></label>
+    <label>Remote <input type="radio" name="type" value="Remote"/></label><br/>
+    <input id="localID" placeholder="Getting Local ID ..." autocomplete="off" class="onlyOnRemote" disabled/>
+    <input id="remoteID" placeholder="Remote ID" autocomplete="off" class="onlyOnRemote"/>
+    <button id="connect" class="onlyOnRemote">Connect</button><br class="onlyOnRemote"/>
     <input id="key" placeholder="Key" autocomplete="off"/>
     <input id="iv" placeholder="Sekret" autocomplete="off"/>
     <br />
