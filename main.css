@@ -27,7 +27,7 @@ h2 {
 }
 
 textarea,
-input {
+input:not([type="radio"]) {
   background: var(--color-input-bg);
   color: var(--color-fg);
   border: 1px solid var(--color-input-border);
