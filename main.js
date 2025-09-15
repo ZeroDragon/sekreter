@@ -108,6 +108,7 @@ async function decryptText (cipherTextBase64, keyText, ivText) {
 const encryptBtn = document.getElementById('encrypt')
 const decryptBtn = document.getElementById('decrypt')
 const connectBtn = document.getElementById('connect')
+const reloadBtn = document.getElementById('reload')
 const output = document.getElementById('output')
 const copy = document.getElementById('copy')
 const types = document.querySelectorAll('input[name="type"]')
@@ -239,3 +240,19 @@ const setupConnection = () => {
     })
   })
 }
+
+reloadBtn.addEventListener('click', () => {
+  // kill service worker and reload
+  if (!('serviceWorker' in navigator)) {
+    window.location.reload()
+    return
+  }
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    if (registrations.length) {
+      for (const registration of registrations) {
+        registration.unregister()
+      }
+    }
+  })
+  window.location.reload()
+})

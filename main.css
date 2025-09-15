@@ -142,3 +142,12 @@ footer {
 .onlyOnRemote.show {
   display: inline-block;
 }
+.icon {
+  display: inline-block;
+}
+.icon svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  cursor: pointer;
+}
