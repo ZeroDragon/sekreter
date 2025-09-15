@@ -23,8 +23,14 @@
     <p>Encrypt and decrypt text using AES-CBC.</p>
     <textarea id="input" placeholder="Enter text to encrypt/decrypt" autocomplete="off"></textarea>
     <br />
-    <label>Local <input type="radio" name="type" value="Local" checked/></label>
-    <label>Remote <input type="radio" name="type" value="Remote"/></label><br/>
+
+    <label for="cbx-3" class="checkbox">
+      <span>Local&nbsp;&nbsp;</span>
+      <input type="checkbox" id="cbx-3" name="type" value="Local" />
+      <label for="cbx-3" class="toggle"><span></span></label>
+      <span>&nbsp;&nbsp;Remote</span>
+    </label>
+    <!-- <label>Local <input type="checkbox" name="type" value="Local" class="checkbox" /> Remote</label><br/> -->
     <input id="localID" placeholder="Getting Local ID ..." autocomplete="off" class="onlyOnRemote" disabled/>
     <input id="remoteID" placeholder="Remote ID" autocomplete="off" class="onlyOnRemote"/>
     <button id="connect" class="onlyOnRemote">Connect</button><br class="onlyOnRemote"/>

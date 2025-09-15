@@ -1,5 +1,5 @@
 /* global self, caches, fetch */
-const CACHE_NAME = 'sekreter-cache-v1.0.1'
+const CACHE_NAME = 'sekreter-cache-v1.0.2'
 const urlsToCache = [
   'index.html',
   'main.css',

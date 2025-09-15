@@ -111,7 +111,7 @@ const connectBtn = document.getElementById('connect')
 const reloadBtn = document.getElementById('reload')
 const output = document.getElementById('output')
 const copy = document.getElementById('copy')
-const types = document.querySelectorAll('input[name="type"]')
+const type = document.getElementById('cbx-3')
 
 const getValues = () => {
   const input = document.getElementById('input').value
@@ -157,9 +157,9 @@ connectBtn.addEventListener('click', () => {
   }
 })
 
-const handleTypeChange = async (type) => {
+type.addEventListener('change', async () => {
   const onlyOnRemote = document.querySelectorAll('.onlyOnRemote')
-  if (type === 'Remote') {
+  if (type.checked) {
     await loadRTC()
     setupConnection()
     onlyOnRemote.forEach(el => el.classList.add('show'))
@@ -167,7 +167,7 @@ const handleTypeChange = async (type) => {
     closeConnection()
     onlyOnRemote.forEach(el => el.classList.remove('show'))
   }
-}
+})
 
 let rtcLoaded = false
 const loadRTC = async _ => {
@@ -183,12 +183,6 @@ const loadRTC = async _ => {
     }
   })
 }
-
-types.forEach(radio => {
-  radio.addEventListener('change', async () => {
-    handleTypeChange(radio.value)
-  })
-})
 
 const closeConnection = () => {
   const localID = document.getElementById('localID')
