@@ -24,7 +24,7 @@ flowchart TD
 sequenceDiagram
   actor Alice as Alice
   actor Bob as Bob
-  rect rgb(191, 223, 255)
+  rect rgb(60, 11, 105)
     Alice <<->> Bob: Both define Key and Sekret
   end
   Note over Alice: Define text to encrypt
@@ -38,19 +38,19 @@ sequenceDiagram
 sequenceDiagram
   actor Alice as Alice
   actor Bob as Future Alice
-  rect rgb(191, 223, 255)
+  rect rgb(60, 11, 105)
     Alice <<->> Bob: Both set remote option
   end
   Alice ->> Bob: Send local ID
   Note over Bob: Paste ID into remote field
   Note over Bob: Hit connect
-  rect rgb(191, 223, 255)
+  rect rgb(60, 11, 105)
     Alice <<->> Bob: Both sessions are now connected
   end
   Note over Alice: Define text to encrypt
   Note over Alice: Define Key and Sekret
   Note over Alice: Hit encrypt
-  rect rgb(191, 223, 255)
+  rect rgb(60, 11, 105)
     Alice <<->> Bob: Everytime "encrypt" is hit,<br>Key and sekret are sync<br>between sessions
   end
   Alice ->> Bob: Send hash to Bob
