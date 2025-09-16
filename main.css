@@ -96,6 +96,14 @@ div.input:hover .after {
   padding: 7px;
 }
 
+.copy {
+  transition: all 0.5s;
+}
+.copy.copied {
+  background: var(--color-heading)!important;
+  color: var(--color-bg)!important;
+}
+
 pre#output {
   background: var(--color-input-bg);
   color: var(--color-fg);
@@ -144,13 +152,6 @@ pre#output {
   text-decoration: none;
   padding: 8px 50px;
   display: inline-block;
-}
-.copy {
-  transition: all 0.5s;
-}
-.copy.copied {
-  background: var(--color-heading);
-  color: var(--color-bg);
 }
 footer {
   position: fixed;

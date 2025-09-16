@@ -111,6 +111,7 @@ const connectBtn = document.getElementById('connect')
 const reloadBtn = document.getElementById('reload')
 const output = document.getElementById('output')
 const copy = document.getElementById('copy')
+const copyLID = document.getElementById('copyLID')
 const type = document.getElementById('cbx-3')
 
 const getValues = () => {
@@ -135,18 +136,23 @@ decryptBtn.addEventListener('click', async () => {
   output.textContent = decrypted
 })
 
-copy.addEventListener('click', () => {
-  const text = output.textContent
+const copyValue = (element) => {
+  const prevText = element.textContent
+  const tg = element.getAttribute('tg')
+  const text = document.getElementById(tg).textContent
   navigator.clipboard.writeText(text).then(() => {
-    copy.classList.add('copied')
-    copy.textContent = 'Copied!'
+    element.classList.add('copied')
+    element.textContent = 'Copied!'
     setTimeout(() => {
-      copy.classList.remove('copied')
-      copy.textContent = 'Copy to clipboard'
+      element.classList.remove('copied')
+      element.textContent = prevText
     }, 2000)
   }).catch(err => {
     console.error('Failed to copy text: ', err)
   })
+}
+[copy, copyLID].forEach(btn => {
+  btn.addEventListener('click', () => copyValue(btn))
 })
 
 connectBtn.addEventListener('click', () => {
@@ -194,6 +200,7 @@ const closeConnection = () => {
   window.RTCid = null
   conn = null
   connOpen = false
+  document.getElementById('connect').disabled = false
 }
 
 const setupConnection = () => {
