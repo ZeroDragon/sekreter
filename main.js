@@ -189,7 +189,7 @@ const closeConnection = () => {
   const remoteID = document.getElementById('remoteID')
   document.getElementById('connect').innerText = 'Connect'
   conn && conn.close()
-  localID.value = ''
+  localID.innerText = 'Getting Local ID ...'
   remoteID.value = ''
   window.RTCid = null
   conn = null
@@ -207,7 +207,7 @@ const setupConnection = () => {
 
   peer.on('open', function (id) {
     const localID = document.getElementById('localID')
-    localID.value = id
+    localID.innerText = id
     window.RTCid = id
   })
 
