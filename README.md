@@ -37,7 +37,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   actor Alice as Alice
-  actor Bob as Future Alice
+  actor Bob as Bob
   rect rgb(60, 11, 105)
     Alice <<->> Bob: Both set remote option
   end
