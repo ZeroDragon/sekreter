@@ -168,7 +168,7 @@ footer {
   display: none;
 }
 .onlyOnRemote.show {
-  display: inline-block;
+  display: block;
 }
 .icon {
   display: inline-block;
